@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// Unity と WebGL テンプレート内の WebAR 実装を接続します。
@@ -18,6 +19,9 @@ public sealed class WebARBridge : MonoBehaviour
     private MarkerDetectedEvent onMarkerDetected = new MarkerDetectedEvent();
 
     public MarkerDetectedEvent OnMarkerDetectedEvent => onMarkerDetected;
+
+    [SerializeField] Image buttonImage;
+
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -39,5 +43,20 @@ public sealed class WebARBridge : MonoBehaviour
     {
         Debug.Log("認識したマーカー: " + markerName);
         onMarkerDetected.Invoke(markerName);
+        if (markerName == "spot_01")
+        {
+            // スタンプ1を取得したときの処理
+            buttonImage.color = Color.black;
+        }
+        else if (markerName == "spot_02")
+        {
+            // スタンプ2を取得したときの処理
+            buttonImage.color = Color.red;
+        }
+        else if (markerName == "spot_03")
+        {
+            // スタンプ3を取得したときの処理
+            buttonImage.color = Color.blue;
+        }
     }
 }
