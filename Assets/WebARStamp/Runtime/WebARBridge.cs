@@ -20,7 +20,8 @@ public sealed class WebARBridge : MonoBehaviour
 
     public MarkerDetectedEvent OnMarkerDetectedEvent => onMarkerDetected;
 
-    [SerializeField] Image buttonImage;
+    [SerializeField]
+    private Image buttonImage;
 
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -43,6 +44,13 @@ public sealed class WebARBridge : MonoBehaviour
     {
         Debug.Log("認識したマーカー: " + markerName);
         onMarkerDetected.Invoke(markerName);
+
+        if (buttonImage == null)
+        {
+            Debug.LogWarning("WebARBridge の Button Image が設定されていません。");
+            return;
+        }
+
         if (markerName == "spot_01")
         {
             // スタンプ1を取得したときの処理

@@ -8,6 +8,7 @@
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
 /[Tt]est[Rr]esults/
+/.unity-build-fix3/
 
 # Unity-generated logs and crash reports
 *.log

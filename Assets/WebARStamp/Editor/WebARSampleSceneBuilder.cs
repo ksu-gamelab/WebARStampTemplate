@@ -49,10 +49,15 @@ public static class WebARSampleSceneBuilder
         buttonRect.anchorMin = new Vector2(0.5f, 0.5f);
         buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
         buttonRect.sizeDelta = new Vector2(520f, 140f);
-        buttonObject.GetComponent<Image>().color = new Color32(38, 134, 220, 255);
+        var buttonImage = buttonObject.GetComponent<Image>();
+        buttonImage.color = new Color32(38, 134, 220, 255);
         var button = buttonObject.GetComponent<Button>();
-        button.targetGraphic = buttonObject.GetComponent<Image>();
+        button.targetGraphic = buttonImage;
         UnityEventTools.AddPersistentListener(button.onClick, bridge.StartWebAR);
+
+        var serializedBridge = new SerializedObject(bridge);
+        serializedBridge.FindProperty("buttonImage").objectReferenceValue = buttonImage;
+        serializedBridge.ApplyModifiedPropertiesWithoutUndo();
 
         var textObject = new GameObject("Text", typeof(RectTransform), typeof(Text));
         textObject.transform.SetParent(buttonObject.transform, false);
