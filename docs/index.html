@@ -90,21 +90,37 @@
             }
         }
 
-        const loaderScript = document.createElement("script");
-        loaderScript.src = loaderUrl;
-        loaderScript.onload = () => {
-            createUnityInstance(canvas, config, progress => {
-                progressBarFull.style.width = (100 * progress) + "%";
-            }).then(unityInstance => {
-                window.unityGameInstance = unityInstance;
+        let unityLoadStarted = false;
+
+        function loadUnity() {
+            if (unityLoadStarted) return;
+            unityLoadStarted = true;
+
+            const loaderScript = document.createElement("script");
+            loaderScript.src = loaderUrl;
+            loaderScript.onload = () => {
+                createUnityInstance(canvas, config, progress => {
+                    progressBarFull.style.width = (100 * progress) + "%";
+                }).then(unityInstance => {
+                    window.unityGameInstance = unityInstance;
+                    loadingBar.style.display = "none";
+                }).catch(message => {
+                    showUnityBanner(message, "error");
+                    loadingBar.style.display = "none";
+                });
+            };
+            loaderScript.onerror = () => {
+                showUnityBanner("Unity loaderの読み込みに失敗しました。", "error");
                 loadingBar.style.display = "none";
-            }).catch(message => {
-                showUnityBanner(message, "error");
-                loadingBar.style.display = "none";
-            });
-        };
-        loaderScript.onerror = () => showUnityBanner("Unity loader の読み込みに失敗しました。", "error");
-        document.body.appendChild(loaderScript);
+            };
+            document.body.appendChild(loaderScript);
+        }
+
+        // TensorFlow.jsがWebGLを確保してからUnityを生成します。
+        window.addEventListener("webar-prewarm-ready", loadUnity, { once: true });
+
+        // webar.js自体を読み込めない場合でもUnityだけは起動させます。
+        window.addEventListener("load", () => setTimeout(loadUnity, 3000), { once: true });
     </script>
 </body>
 </html>
