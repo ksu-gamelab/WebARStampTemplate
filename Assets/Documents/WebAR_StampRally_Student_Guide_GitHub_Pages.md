@@ -78,6 +78,35 @@ Consoleに次のメッセージが表示されることを確認する。
 WebARはWebGLビルドで実行してください。
 ```
 
+### マーカー上の透過PNGと表示位置
+
+マーカーを認識すると、次の透過PNGがマーカー上へ表示される。
+
+```text
+Assets/WebGLTemplates/WebARStamp/Overlays/spot_01.png
+Assets/WebGLTemplates/WebARStamp/Overlays/spot_02.png
+Assets/WebGLTemplates/WebARStamp/Overlays/spot_03.png
+```
+
+キャラクターを差し替える場合は、同じファイル名の透過PNGで置き換える。
+
+表示位置は次のファイルにある各 `a-image` の `position` で変更できる。
+
+```text
+Assets/WebGLTemplates/WebARStamp/index.html
+```
+
+```html
+<a-image position="0 0 0.01" width="0.70" height="0.90">
+```
+
+- 1番目の値（X）: 左右。正の値で右へ移動
+- 2番目の値（Y）: 上下。正の値で上へ移動
+- 3番目の値（Z）: マーカー面からの距離。通常は `0.01` 程度
+- `width`、`height`: 表示サイズ
+
+例として少し上へ移動する場合は `position="0 0.15 0.01"` とする。変更後は、再度 `docs` フォルダーへWebGLビルドする。
+
 ---
 
 ## AR読み取り結果を受け取るスクリプト

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>{{{ PRODUCT_NAME }}}</title>
     <link rel="stylesheet" href="style.css">
     <script src="Libraries/aframe.min.js"></script>
-    <script src="Libraries/mindar-image-aframe.prod.js?v=webar-fix-2"></script>
-    <script src="webar.js?v=webar-fix-2" defer></script>
+    <script src="Libraries/mindar-image-aframe.prod.js?v=webar-fix-3"></script>
+    <script src="webar.js?v=webar-fix-3" defer></script>
 </head>
+
 <body>
     <div id="unity-container">
         <canvas id="unity-canvas" tabindex="-1"></canvas>
@@ -24,14 +26,10 @@
     <div id="ar-container" aria-hidden="true">
         <button id="ar-close-button" type="button" aria-label="WebARを閉じる">&times;</button>
 
-        <a-scene
-            id="ar-scene"
+        <a-scene id="ar-scene"
             mindar-image="imageTargetSrc: targets.mind; autoStart: false; uiLoading: no; uiError: no; uiScanning: no; maxTrack: 1;"
-            embedded
-            color-space="sRGB"
-            renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true;"
-            vr-mode-ui="enabled: false"
-            device-orientation-permission-ui="enabled: false">
+            embedded color-space="sRGB" renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true;"
+            vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
 
             <a-assets timeout="15000">
                 <img id="overlay-image-0" src="Overlays/spot_01.png" alt="">
@@ -41,22 +39,20 @@
 
             <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+            <!-- position="X Y Z": X=左右、Y=上下、Z=マーカー面からの距離 -->
             <a-entity id="target-0" mindar-image-target="targetIndex: 0">
-                <a-image id="overlay-0" src="#overlay-image-0" position="0 0 0.01"
-                    width="0.70" height="0.90" visible="false"
-                    material="transparent: true; alphaTest: 0.01"></a-image>
+                <a-image id="overlay-0" src="#overlay-image-0" position="0 0 0.01" width="0.70" height="0.90"
+                    visible="false" material="transparent: true; alphaTest: 0.01"></a-image>
             </a-entity>
 
             <a-entity id="target-1" mindar-image-target="targetIndex: 1">
-                <a-image id="overlay-1" src="#overlay-image-1" position="0 0 0.01"
-                    width="0.70" height="0.90" visible="false"
-                    material="transparent: true; alphaTest: 0.01"></a-image>
+                <a-image id="overlay-1" src="#overlay-image-1" position="0 0 0.01" width="0.70" height="0.90"
+                    visible="false" material="transparent: true; alphaTest: 0.01"></a-image>
             </a-entity>
 
             <a-entity id="target-2" mindar-image-target="targetIndex: 2">
-                <a-image id="overlay-2" src="#overlay-image-2" position="0 0 0.01"
-                    width="0.70" height="0.90" visible="false"
-                    material="transparent: true; alphaTest: 0.01"></a-image>
+                <a-image id="overlay-2" src="#overlay-image-2" position="0 0 0.01" width="0.70" height="0.90"
+                    visible="false" material="transparent: true; alphaTest: 0.01"></a-image>
             </a-entity>
         </a-scene>
     </div>
@@ -72,23 +68,23 @@
             arguments: [],
             dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
             frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
-#if USE_THREADS
+            #if USE_THREADS
             workerUrl: buildUrl + "/{{{ WORKER_FILENAME }}}",
-#endif
+            #endif
 #if USE_WASM
             codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
-#endif
+            #endif
 #if MEMORY_FILENAME
             memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
-#endif
+            #endif
 #if SYMBOLS_FILENAME
             symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
-#endif
+            #endif
             streamingAssetsUrl: "StreamingAssets",
             companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
-            productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
-            productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
-            showBanner: showUnityBanner
+        productName: { { { JSON.stringify(PRODUCT_NAME) } } },
+        productVersion: { { { JSON.stringify(PRODUCT_VERSION) } } },
+        showBanner: showUnityBanner
         };
 
         function showUnityBanner(message, type) {
@@ -134,4 +130,5 @@
         window.addEventListener("load", () => setTimeout(loadUnity, 3000), { once: true });
     </script>
 </body>
+
 </html>

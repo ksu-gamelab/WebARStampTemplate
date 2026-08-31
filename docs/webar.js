@@ -10,8 +10,8 @@
     let mindARBackendReady = false;
     let pendingARStartReject = null;
 
-    // 教材配布時は false。発展課題でのみ true に変更します。
-    const ENABLE_AR_OVERLAY = false;
+    // マーカー上へ対応する透過PNGを追従表示します。
+    const ENABLE_AR_OVERLAY = true;
     const markerNames = ["spot_01", "spot_02", "spot_03"];
 
     function showWebARError(message, error) {
